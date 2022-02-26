@@ -194,8 +194,8 @@ exec xset s off
 #bindsym $mod+semicolon exec i3lock
 
 #GAPS
-gaps inner 4
-gaps outer 2
+#gaps inner 4
+#gaps outer 2
 
 exec_always picom -f
 
