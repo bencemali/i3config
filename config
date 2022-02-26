@@ -1,0 +1,205 @@
+#i3config
+
+exec xset -dpms
+exec xset s off
+
+#WALLPAPER
+#exec_always feh --bg-fill --bg-scale --randomize ~/Pictures/wallpapers/solarized/*
+exec_always feh --bg-fill --bg-scale ~/Pictures/wallpapers/pheasant.jpg
+#exec_always feh --bg-fill --bg-scale ~/Pictures/wallpapers/solarized/vim*
+#exec_always feh --bg-fill --bg-scale ~/Pictures/wallpapers/solarized/vim*
+
+#MY BASH PROMPT
+#PS1='\[\e[0;1;4;38;5;36m\] \[\e[0;1;4;38;5;36m\] \[\e[0;1;4;38;5;36m\] \[\e[0;1;38;5;36m\]\t\[\e[0;1;4;38;5;36m\] \[\e[0;1;4;38;5;36m\] \[\e[0;1;38;5;36m\]\d\[\e[0;1;4;38;5;36m\] \[\e[0;1;4;38;5;36m\] \[\e[0;1;4;38;5;36m\] \n\[\e[0;1;38;5;36m\][\[\e[0;1;38;5;36m\]\u\[\e[0;1;38;5;36m\]@\[\e[0;1;38;5;36m\]\H\[\e[0;1;38;5;36m\]]\[\e[0;1;38;5;36m\] \[\e[0;1;38;5;36m\]::\[\e[0;1;38;5;36m\] \[\e[0;1;38;5;36m\](\[\e[0;1;38;5;36m\]\w\[\e[0;1;38;5;36m\])\[\e[0;1;38;5;36m\] \[\e[0;1;38;5;36m\]::\[\e[0;1;38;5;36m\] \[\e[0;1;38;5;36m\](\[\e[0;1;38;5;36m\]$(git branch 2>/dev/null | grep '"'"'^*'"'"' | colrm 1 2)\[\e[0;1;38;5;36m\])\[\e[0;1;38;5;36m\] \[\e[0;1;38;5;36m\]::\[\e[0;1;38;5;36m\] \[\e[0;1;38;5;36m\](\[\e[0;1;38;5;36m\]$(ip route get 1.1.1.1 | awk -F"src " '"'"'NR==1{split($2,a," ");print a[1]}'"'"')\[\e[0;1;38;5;36m\])\n\[\e[0;1;4;38;5;36m\] \[\e[0;1;4;38;5;36m\] \[\e[0;1;4;38;5;36m\] \[\e[0;1;38;5;36m\]$\[\e[0;1;38;5;36m\] \[\e[0m\]' 
+
+#XPROP NAME SCRIPT
+#xprop | grep WM_CLASS
+
+#SET MOD KEY
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 12
+
+
+
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders both
+
+#SWAP CAPS:ESCAPE
+exec_always setxkbmap -option caps:swapescape
+
+#KEYPRESS RATE
+exec_always xset r rate 350 55
+
+
+#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+exec --no-startup-id nm-applet
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym $mod+u exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym $mod+i exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+bindsym $mod+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+
+#TERMINATOR
+bindsym $mod+Return exec terminator
+#exec terminator
+
+#KILL FOCUSED WINDOW
+bindsym $mod+q kill
+
+#ROFI
+bindsym $mod+d exec --no-startup-id rofi_run
+
+#CHANGE FOCUS
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+
+#MOVE FOCUSED WINDOW
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#SPLIT
+#HORIZONTALLY
+bindsym $mod+Shift+h split h
+#VERTICALLY
+bindsym $mod+Shift+v split v
+
+#FULL-SCREEN FOCUSED
+bindsym $mod+f fullscreen toggle
+
+#CHANGE CONTAINER LAYOUT
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+#TOGGLE TILING/FLOATING
+bindsym $mod+space floating toggle
+
+# change focus between tiling / floating windows
+#bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+
+#WORKSPACE CONFIG
+
+#Pavucontrol
+for_window [class="Pavucontrol"] move to workspace "9"
+exec pavucontrol
+
+#Firefox
+for_window [class="firefox"] move to workspace "3"
+bindsym $mod+w exec firefox
+exec firefox
+
+#Terminator
+#for_window [class="Terminator"] move to workspace "2"
+#exec terminator
+
+#Nvim
+for_window [class="st-256color"] move to workspace "2"
+#exec nvim
+
+#Vscode
+for_window [class="code-oss"] move to workspace "4"
+
+#Subl
+exec_always sublime_text
+for_window [class="Sublime_text"] move to workspace "4"
+for_window [class="sublime_text"] move to workspace "4"
+
+#Spotify
+for_window [class="Spotify"] move to workspace "5"
+#for_window [class="vlc"] move to workspace "5"
+#exec spotify
+
+#Thunar
+for_window [class="Thunar"] move to workspace "10"
+exec thunar
+#
+#heroic games launcher
+for_window [class="heroic"] move to workspace "8"
+
+# switch to workspace
+bindsym $mod+1 workspace "1"
+bindsym $mod+2 workspace "2"
+bindsym $mod+3 workspace "3"
+bindsym $mod+4 workspace "4"
+bindsym $mod+5 workspace "5"
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace "8"
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace "10"
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace "1"
+bindsym $mod+Shift+2 move container to workspace "2"
+bindsym $mod+Shift+3 move container to workspace "3"
+bindsym $mod+Shift+4 move container to workspace "4"
+bindsym $mod+Shift+5 move container to workspace "5"
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace "8"
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace "10"
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize windows
+        bindsym $mod+Left resize shrink width 10 px or 10 ppt
+        bindsym $mod+Down resize grow height 10 px or 10 ppt
+        bindsym $mod+Up resize shrink height 10 px or 10 ppt
+        bindsym $mod+Right resize grow width 10 px or 10 ppt
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+#bar {
+#        i3bar_command i3bar --transparency
+#        status_command i3status -c $HOME/.config/i3status/i3status.conf
+#        position top
+#        colors {
+#                focused_workspace  #005c43 #005c43 #000000
+#               inactive_workspace #000000 #000000 #005c43
+#       }
+#}
+
+# DISPLAY SETTINGS
+exec_always xrandr --output DP-1 --mode 1920x1080 --rate 144.00
+
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+#exec --no-startup-id killall polybar; polybar -r example
+exec xset -dpms
+exec xset s off
+
+#bindsym $mod+semicolon exec i3lock
+
+#GAPS
+#gaps inner 4
+#gaps outer 2
+
+exec_always picom -f
+
+#SCREENSHOT
+bindsym --release Shift+Print exec "scrot -z -s -e 'xclip -selection c -t image/png < $f && mv $f ~/Pictures/screenshots'"
+
+client.focused          #009b54 #000000 #000000 #009b54 #005c43
